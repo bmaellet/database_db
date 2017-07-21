@@ -1,0 +1,239 @@
+		      MYSQL COMPLETE DATABASE TRAINING
+=========================================================
+SHOW DATABASES;			- Shows all your databases
+
+                CREATING A DATABASE
+            ---------------------------
+CREATE DATABASE (db_name); 	- create a database
+eg CREATE DATABASE students;    - This create a database called (students).
+
+                DELETING(DROPING) A DATABASE
+            ------------------------------------
+DROP DATABASE (db_name);	- delete a database
+DROP DATABASE students;     - This delete the database (students).
+
+                USING A DATABASE
+            -------------------------
+USE (db_name);			- to use a database
+eg. USE students;       - This move you to the (students) database.
+SELECT database();		- shows you the current database you are woking on.
+
+
+=========================================================
+		TABLES IN DATABASE (MYSQL)
+=========================================================
+A database is just a bunch of tables.
+Tables hold the data. You can also say a table is a
+collection of related data held in a structured format
+within a database.
+Tables are the true heart of sql.
+
+Alert!
+When talking about Columns in database,
+they are reffer to as (headers).
+
+And Rows(the actual data) in database are the actual
+data.
+
+There are many types of datatypes in (mysql),
+the main datatypes that we will work with are:
+	VARCHAR (string or text data)
+	INT (intergers or whole number)
+----------------------------------------------------
+        
+        Syntax: # this create a mysql table.
+                CREATING A TABLE IN MYSQL
+            ---------------------------------
+    CRATE TABLE (table_name)
+	(
+	   column_name data_type,
+	   column_name data_type
+	);
+----------------------------------------------------
+
+eg. CREATE TABLE register_form (
+	   First_Name VARCHAR(20),
+	   Last_Name VARCHAR(20),
+	   Age INT
+ ); # this creates a table called (register_form).
+ 
+ 
+            ANOTHER WAY OF WRITING THE MYSQL STATEMENT
+                    IN CREATING A TABLE.
+------------------------------------------------------------------------------------
+CREATE TABLE register_form (First_Name VARCHAR(20), Last_Name VARCHAR(20), Age INT);
+------------------------------------------------------------------------------------
+
+To know that you've created a table, use the following
+command:
+SHOW TABLES; - Shows the table you've created.
+
+To see what is inside the table, use the following commands:
+SHOW COLUMNS FROM (table_name);  - Shows the colums of your table
+eg. SHOW COLUMNS FORM register_form;
+
+DESC (table_name);  - Does the same thing as
+DESC register_form;
+		      (SHOW COLUMNS FROM (table_name);
+
+Alert!	- DESC - means Describe a table. Is the same as (SHOW COLUMNS FROM (table_name))
+
+                        DELETING A TABLE IN MYSQL
+            -----------------------------------------------
+To Delete a table in mysql
+DROP TABLE (table_name);  - Delete the table you selected.
+eg. DROP TABLE register_form;      This will delete the table (register_form).
+
+
+
+
+
+Alert!  Now is the fun part!
+
+                    INSERTING DATA INTO YOUR TABLES
+            ------------------------------------------------------
+
+Since the (tables) have been created but it doesn't have any
+data in it. Now it's time to add some data into our table!
+
+                TO INSERT DATA INTO A TABLE
+            ---------------------------------------
+INSERT INTO table_name (f_name, l_name, age, city)
+VALUES ("Maellet", "Bundu", 24, "Freetown");
+
+eg. INSERT INTO register_form (First_Name, Last_Name, age)
+    VALUES ("Maellet", "Bundu", 24)
+    
+    Insert multiple statements into your table
+----------------------------------------------------------------------  
+eg. INSERT INTO register_form (First_Name, Last_Name, age)
+    VALUES ("Maellet", "Bundu", 24),
+           ("Mayer Natallia", "Bundu", 2),
+           ("Yayah", "Kamara", 25);
+
+----------------------------------------------------------------------
+
+To see what is inside the tables use the command;
+----------------------------------------------------------------------
+
+SELECT * FROM table_name;
+eg. SELECT * FROM register_form;
+    SELECT * FROM register_form WHERE First_name = "Maellet";   # this
+    the row that contains the info about(Maellet).
+----------------------------------------------------------------------
+
+
+Sometimes WARNINGS do popup!
+For example when you exceed the number of data into a column, 
+eg. name VARCHAR(10), then your name exceeded to 12 characters, a warning
+will show as (data as been truncated).
+
+Another warning that also common is when mixing datatypes. 
+For example where you should put an (INT), you use a (VARCHAR).
+a WARNING will show up as (incorrect interger value).
+   
+To see the WARNINGS use the following command:
+-----------------------------------------------------------------------
+
+SHOW WARNINGS;  - This show you the WARNINGS that's been made.
+
+
+                WORKING WITH NULL (column) IN TABLE
+=======================================================================
+
+NULL basically means that the value is unknown but that doesn't 
+mean NULL means (zero). --> IMPORTANT!!!
+Is SQL way of saying "I don't know what this is" or the "value is not specified".
+
+Alert! The solution to (NULL) is (NOT NULL)
+eg. Let say you've created a table called (cats). In this table, you insert
+the following commmand.
+
+INSERT INTO cats(name, age)
+VALUES (),  # No data is entered in the field of (name) and (age).
+
+This will definately show as (NULL) that's no value is specified.
+
+Alert! NOT NULL cannot permit the field to be empty.
+
+                CREATE A TABLE WITH THE (NOT NULL) COMMAND
+        ---------------------------------------------------------------------
+   CREATE TABLE register_form (
+   First_name VARCHAR(20) NOT NULL,   # NOT NULL permit the field (First_Name) not to be empty.
+   Last_Name VARCHAR(20) NOT NULL,    # NOT NULL permit the field (Last_Name) not to be empty.
+   age INT NOT NULL);                 # NOT NULL permit the field (age) not to be empty.
+   
+eg INSERT INTO register_form (First_Name, Last_Name, age) 
+   VALUES ("Mayer", "Natallia");  # The age field is been left empty therefore, an error will occur.
+   
+            
+                    WORKING WITH DEFAULT (column) IN TABLES
+            =====================================================
+It's helpful to just decide to set (DEFAULT VALUES). That's if something is not specified,
+there will be a (fall back). That is if something is not specified or a field is not specified,
+we then set a default value to it.
+
+Alert! We set (default values) when defining a (table) just a when setting the (NOT NULL).
+eg CREATE TABLE register_form
+    (
+        First_Name VARCHAR(20) NOT NULL,
+        Last_Name VARCHAR(20) NOT NULL,
+        age INT DEFAULT 10,
+        city VARCHAR(10) DEFAULT "Unamed"   
+    );
+    
+        Now INSERT data into the table
+eg. INSERT INTO register_form(First_Name, Last_name, age, city)
+    VALUES ("Mayer", "Bundu"),          # The age will use (Default = 10) and the city will use (Default = "Unamed")
+           ("Timmal", "Natallia", 18),  # The City will use the (Default = "Unamed")
+           ("Aminata", "Kamara");       # Both the (age) and (city) will take their (DEFAULT VALUES).
+    
+    
+                WORKING WITH THE PRIMARY KEY (column) IN TABLE
+        =======================================================
+(PRIMARY KEYS) are very useful or important when working with (identical data) in (MYSQL).
+example:
+                    Identical data
+----------------------------------------------------------------
+First_Name      Last_Name       age     City
+ Maellet         Bundu           23     Freetown
+ Maellet         Bundu           23     Freetown
+ Maellet         Bundu           23     Freetown
+ Maellet         Bundu           23     Freetown
+ ---------------------------------------------------------------
+ The (PRIMARY KEY) serve as a (Unique Identifier (ID)).
+ 
+ The easiest way to know that the names above are different, is to assigned
+ an (ID) that's a UNIQUE IDENTIFIER.
+ 
+ Alert!!
+ 
+            THE PRIMARY KEY 
+            UNIQUE IDENTIFIER (IMPORTANT!!!)
+            
+    Now let add an ID into our new table
+
+eg. CREATE TABLE register_form 
+    (
+        name_ID INT NOT NULL,
+        first_name VARCHAR(20) NOT NULL DEFAULT = "Blank",
+        last_name VARCHAR(20) NOT NULL DEFAULT = "Blank",
+        age INT NOT NULL DEFAULT = 22,
+        PRIMARY KEY (name_ID)
+    );
+    
+ 
+                        EXERCISE
+    ================================================
+    Define an employees table, with the following fields:
+        id - number (automatically increment), mandatory, PRIMARY KEY
+        last_name - text, mandatory
+        first_name - text, mandatory
+        middle_name - text, not mandatory
+        age - number, mandatory
+        current_status - text, mandatory, default to "employed"
+        
+        The 'mssql' extension is recommended for this file type.
+ 
+ 
+
